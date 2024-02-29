@@ -1,0 +1,441 @@
+{% extends '../base.html' %}
+{% load static %}
+<html lang="en">
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<body class="light-theme">
+
+  <!--
+    - #HEADER
+  -->
+
+  <header>
+
+    <div class="container">
+
+      <nav class="navbar">
+
+        <a href="#">
+          <img src="{% static './assets/images/logo-light.png' %}" alt="Devblog's logo" width="150" height="40"
+            class="logo-light">
+          <img src="{% static './assets/images/logo-dark.png' %}" alt="Devblog's logo" width="150" height="40"
+            class="logo-dark">
+        </a>
+
+        <div class="btn-group">
+
+          <button class="theme-btn theme-btn-mobile light">
+            <ion-icon name="moon" class="moon"></ion-icon>
+            <ion-icon name="sunny" class="sun"></ion-icon>
+          </button>
+
+          <button class="nav-menu-btn">
+            <ion-icon name="menu-outline"></ion-icon>
+          </button>
+
+        </div>
+
+        <div class="flex-wrapper">
+
+          <ul class="desktop-nav">
+
+            <li>
+              <a href="#" class="nav-link">Home</a>
+            </li>
+
+            <li>
+              <a href="#" class="nav-link">About Me</a>
+            </li>
+
+            <li>
+              <a href="#" class="nav-link">Contact</a>
+            </li>
+
+          </ul>
+
+          <button class="theme-btn theme-btn-desktop light">
+            <ion-icon name="moon" class="moon"></ion-icon>
+            <ion-icon name="sunny" class="sun"></ion-icon>
+          </button>
+
+        </div>
+
+        <div class="mobile-nav">
+
+          <button class="nav-close-btn">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+
+          <div class="wrapper">
+
+            <p class="h3 nav-title">Main Menu</p>
+
+            <ul>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Home</a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">About Me</a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">Contact</a>
+              </li>
+            </ul>
+
+          </div>
+
+          <div>
+
+            <p class="h3 nav-title">Topics</p>
+
+            <ul>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Database</a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">Accessibility</a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">Web Performance</a>
+              </li>
+            </ul>
+
+          </div>
+
+        </div>
+
+      </nav>
+
+    </div>
+
+  </header>
+
+
+
+
+
+  <main>
+
+    <!--
+      - #HERO SECTION
+    -->
+
+    <div class="hero">
+
+      <div class="container">
+
+        <div class="left">
+
+          <h1 class="h1">
+            Hi, I'm <b>Dung&nbsp;Luong</b>.
+            <br>Web Developer
+          </h1>
+
+          <p class="h3">
+            Specialized in <abbr title="Accessibility">Backend</abbr>
+            and Django
+          </p>
+
+          <div class="btn-group">
+            <a href="#" class="btn btn-primary">Contact Me</a>
+            <a href="#" class="btn btn-secondary">About Me</a>
+          </div>
+
+        </div>
+
+        <div class="right">
+
+          <div class="pattern-bg"></div>
+          <div class="img-box">
+            <img src="{% static './assets/images/hero.png' %}" alt="Julia Walker" class="hero-img">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+
+
+    <div class="main">
+
+      <div class="container">
+
+        <!--
+          - BLOG SECTION
+        -->
+
+        <div class="blog">
+
+          <h2 class="h2">Latest Blog Post</h2>
+
+          <div class="blog-card-group">
+
+
+
+            {% for post in Posts %}
+            <div class="blog-card">
+
+              <div class="blog-card-banner">
+                {% if post.previewicon %}
+                <img src="{{post.previewicon.url}}" alt="Fast web page loading on a $20 feature phone" width="250"
+                  class="blog-banner-img">
+                {% endif %}
+              </div>
+
+              <div class="blog-content-wrapper">
+
+                <button class="blog-topic text-tiny">{{post.category}}</button>
+
+                <h3><a href="" class="h3">{{post.title}}</a></h3>
+
+                <p class="blog-text">
+                  {% if post.content|length > 100 %}
+                  {{ post.content|slice:"100" }}...
+                  {% else %}
+                  {{ post.content }}
+                  {% endif %}
+                </p>
+
+                <div class="wrapper-flex">
+
+                  <div class="profile-wrapper">
+                    {% if user.avatar %}
+                    <img src="{{user.avatar.url}}" alt="Julia walker" width="50">
+                    {% endif %}
+                  </div>
+
+                  <div class="wrapper">
+                    <a href="#" class="h4">{{user.username}}</a>
+
+                    <p class="text-sm">
+                      <time datetime="2021-12-10">{{post.date|date:"d-m-Y"}}</time>
+                    </p>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+            {% endfor %}
+
+
+
+
+
+
+
+          </div>
+
+          <button class="btn load-more">Load More</button>
+
+        </div>
+
+
+
+
+
+        <!--
+          - ASIDE
+        -->
+
+        <div class="aside">
+
+          <div class="topics">
+
+            <h2 class="h2">Topics</h2>
+            {% for category in Categories %}
+            <a href="#" class="topic-btn">
+              <div class="icon-box">
+                {% if category.categoryicon %}
+                <img src="{{category.categoryicon.url}}" alt="" width="60%" style="border-radius: 12px;">
+                {% else %}
+                {% endif %}
+              </div>
+
+              <p>{{category.categoryname}}</p>
+            </a>
+            {% endfor %}
+
+
+
+
+
+
+            <div class="tags"></div>
+            <div class="contact">
+
+              <h2 class="h2">Let's Talk</h2>
+
+              <div class="wrapper">
+
+                <p>
+                  Do you want to learn more about how I can help your company overcome problems? Let us have a
+                  conversation.
+                </p>
+
+                <ul class="social-link">
+
+                  <li>
+                    <a href="https://github.com/DungHandsome" class="icon-box github" target="_blank">
+                      <i class="fa-brands fa-github"></i>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="https://wa.me/84987501858" class="icon-box whatsapp" target="_blank">
+                      <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="https://www.facebook.com/luong.tuandung.3" class="icon-box facebook" target="_blank">
+                      <i class="fa-brands fa-facebook"></i>
+                    </a>
+                  </li>
+
+                </ul>
+
+              </div>
+
+            </div>
+
+            <div class="newsletter">
+
+              <h2 class="h2">Newsletter</h2>
+
+              <div class="wrapper">
+
+                <p>
+                  Subscribe to our newsletter to be among the first to keep up with the latest updates.
+                </p>
+
+                <form action="#">
+                  <input type="email" name="email" placeholder="Email Address" required>
+
+                  <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+  </main>
+
+
+
+
+
+  <!--
+    - #FOOTER
+  -->
+
+  <footer>
+
+    <div class="container">
+
+      <div class="wrapper">
+
+        <a href="#" class="footer-logo">
+          <img src="{% static './assets/images/logo-light.png' %}" alt="DevBlog's Logo" width="150" height="40"
+            class="logo-light">
+          <img src="{% static './assets/images/logo-dark.png' %}" alt="DevBlog's Logo" width="150" height="40"
+            class="logo-dark">
+        </a>
+
+        <p class="footer-text">
+          Learn about Web accessibility, Web performance, and Database management.
+        </p>
+
+      </div>
+
+      <div class="wrapper">
+
+        <p class="footer-title">Quick Links</p>
+
+        <ul>
+
+          <li>
+            <a href="#" class="footer-link">Advertise with us</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">About Us</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Contact Us</a>
+          </li>
+
+        </ul>
+
+      </div>
+
+      <div class="wrapper">
+
+        <p class="footer-title">Legal Stuff</p>
+
+        <ul>
+
+          <li>
+            <a href="#" class="footer-link">Privacy Notice</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Cookie Policy</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Terms Of Use</a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+    <p class="copyright">
+      &copy; Copyright 2022 <a href="#">codewithsadee</a>
+    </p>
+
+  </footer>
+  <!--
+    - custom js link
+  -->
+  <script src="{% static './assets/js/script.min.js' %}"></script>
+</body>
+{% endblock %}
+
+
+
+
+
+
+
+
+<!--
+    - custom js link
+  -->
+<script src="{% static './assets/js/script.min.js' %}"></script>
+
+</body>
+
+</html>
